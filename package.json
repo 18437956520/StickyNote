@@ -16,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/18437956520/StickyNote/issues"
   },
-  "homepage": "https://github.com/18437956520/StickyNote#readme"
+  "homepage": "https://github.com/18437956520/StickyNote#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "express-generator": "^4.16.1"
+  }
 }
