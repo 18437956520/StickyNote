@@ -1,5 +1,7 @@
 // require('less/toast.less');
 
+var $ = require('../lib/jquery-3.4.1.min.js')
+
 function toast(msg, time) {
     this.msg = msg;
     this.dismissTime = time || 1000; //ms
@@ -28,6 +30,6 @@ function Toast(msg, time) {
     return new toast(msg, time);
 }
 
-Toast('hello')
+Toast('hello hhy')
 
 module.exports.Toast = Toast;
