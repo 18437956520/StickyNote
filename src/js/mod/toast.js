@@ -1,6 +1,6 @@
-// require('less/toast.less');
+require('less/toast.less');
 
-// var $ = require('jquery')
+var $ = require('jquery');
 
 function toast(msg, time) {
     this.msg = msg;
@@ -29,7 +29,5 @@ toast.prototype = {
 function Toast(msg, time) {
     return new toast(msg, time);
 }
-
-Toast('hello hhy')
 
 module.exports.Toast = Toast;
