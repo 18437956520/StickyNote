@@ -1,3 +1,4 @@
+
 require('less/index.less');
 
 var NoteManager = require('mod/note-manager.js').NoteManager;
