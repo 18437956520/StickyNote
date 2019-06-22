@@ -15,7 +15,7 @@ toast.prototype = {
     showToast: function () {
         var self = this;
         this.$toast.fadeIn(300, function () {
-            setTimeout(() => {
+            setTimeout(function () {
                 self.$toast.fadeOut(300, function () {
                     self.$toast.remove();
                 });
