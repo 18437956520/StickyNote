@@ -25,10 +25,10 @@ module.exports = {
             less: path.join(__dirname, "less")
         }
     },
-    // plugins: [
-    //     new webpack.ProvidePlugin({
-    //         $: "jquery"
-    //     }),
+    plugins: [
+        new webpack.ProvidePlugin({
+            $: "jquery"
+        }),
     //     new ExtractTextPlugin("css/index.css"),
     //     new webpack.LoaderOptionsPlugin({
     //         options: {
@@ -45,5 +45,5 @@ module.exports = {
         //         comments: false,
         //     },
         // }),
-    // ]
-};
+    ]
+}

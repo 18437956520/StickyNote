@@ -1,6 +1,6 @@
 // require('less/toast.less');
 
-var $ = require('jquery')
+// var $ = require('jquery')
 
 function toast(msg, time) {
     this.msg = msg;
