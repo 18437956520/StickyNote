@@ -39,9 +39,11 @@ router.post('/notes/add', function (req, res, next) {
 router.post('/notes/edit', function (req, res, next) {
   Note.update({
     text: req.body.note
-  }, {where: {
-    id: req.body.id
-  }}).then(function () {
+  }, {
+    where: {
+      id: req.body.id
+    }
+  }).then(function () {
     res.send({
       status: 0
     })
@@ -49,7 +51,15 @@ router.post('/notes/edit', function (req, res, next) {
 })
 
 router.post('/notes/delete', function (req, res, next) {
-
+  Note.destroy({
+    where: {
+      id: req.body.id
+    }
+  }).then(function () {
+    res.send({
+      status: 0
+    })
+  })
 })
 
 module.exports = router;
