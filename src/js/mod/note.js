@@ -22,7 +22,7 @@ Note.prototype = {
   defaultOpts: {
     id: '', //Note的 id
     $ct: $('#content').length > 0 ? $('#content') : $('body'), //默认存放 Note 的容器
-    context: 'input here' //Note 的内容
+    context: '这里填写内容' //Note 的内容
   },
 
   initOpts: function (opts) {
@@ -34,8 +34,13 @@ Note.prototype = {
 
   createNote: function () {
     var tpl = '<div class="note">' +
+      '<div class="note-snag"></div>' +
+      '<div class="note-before"></div>' + 
       '<div class="note-head"><span class="username"></span><span class="delete">&times;</span></div>' +
       '<div class="note-ct" contenteditable="true"></div>' +
+      '<div class="note-bottom">' + 
+      '<div class="note-after"></div>' + 
+      '</div>' + 
       '</div>';
     this.$note = $(tpl);
     this.$note.find('.note-ct').text(this.opts.context);
@@ -47,6 +52,9 @@ Note.prototype = {
   setStyle: function () {
     var color = this.colors[Math.floor(Math.random() * 6)];
     this.$note.find('.note-head').css('background-color', color[0]);
+    this.$note.find('.note-after').css('background-color', color[1]);
+    this.$note.find('.note-bottom').css('background-color', color[1]);
+    this.$note.find('.note-before').css('background-color', color[0]);
     this.$note.find('.note-ct').css('background-color', color[1]);
   },
 
@@ -73,7 +81,7 @@ Note.prototype = {
 
     //contenteditable没有 change 事件，所有这里做了模拟通过判断元素内容变动，执行 save
     $noteCt.on('focus', function () {
-      if ($noteCt.html() == 'input here') $noteCt.html('');
+      if ($noteCt.html() == '这里填写内容') $noteCt.html('');
       $noteCt.data('before', $noteCt.html());
     }).on('blur paste', function () {
       if ($noteCt.data('before') != $noteCt.html()) {
@@ -114,7 +122,7 @@ Note.prototype = {
       note: msg
     }).done(function (ret) {
       if (ret.status === 0) {
-        Toast('update success');
+        Toast('修改成功');
       } else {
         Toast(ret.errorMsg);
       }
@@ -129,7 +137,7 @@ Note.prototype = {
       })
       .done(function (ret) {
         if (ret.status === 0) {
-          Toast('add success');
+          Toast('添加成功');
         } else {
           self.$note.remove();
           Event.fire('waterfall')
@@ -146,7 +154,7 @@ Note.prototype = {
       })
       .done(function (ret) {
         if (ret.status === 0) {
-          Toast('delete success');
+          Toast('删除成功');
           self.$note.remove();
           Event.fire('waterfall')
         } else {

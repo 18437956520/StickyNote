@@ -1,18 +1,45 @@
 .note{
-  position: absolute;;
   color: #333;
+  position: absolute;
   width: 160px;
+  border-radius: 10px 10px 0px 0px; 
   margin: 20px 10px;
-  transition: all 0.5s;
+  transition: all 0.5s ease;
+
+  .note-snag{
+    position: absolute;
+    top: -20px;
+    left: 48%;
+    width: 18px;
+    height: 21px;
+    background-image: url(https://dk7jqzmygmr3q.cloudfront.net/ml/neducatio/5b633eca-5c8f-4d4b-8ce0-cf9618e9aec6.image?v=1&type=png);
+    background-size: cover;
+    z-index: 1;
+  }
+
+  .note-before{
+    content: "";
+    background: #ffe168;
+    border-bottom: 20px solid #f0af1f;
+    border-right: 20px solid transparent;
+    width: 140px;
+    position: absolute;
+    bottom: -20px;
+    right:10px;
+    transform: skew(-45deg);
+  }
 
   .note-head{
-    height: 20px;
     background-color: #ea9b35;
     cursor: move;
-    font-size: 12px;
-    line-height: 20px;
-    padding-left: 10px;
     color: #666;
+    height: 20px;
+    width: 100%;
+    padding: 5px 0px;
+    border-radius: 10px 10px 0px 0px; 
+    text-align: center;
+    font-size: 20px;
+    transition: background 0.5s ease;
 
     &:hover .delete{
       opacity: 1;
@@ -53,20 +80,38 @@
 
   .delete {
     position: absolute;
-    top: 4px;
-    right: 4px;
-    font-size: 12px;
+    top: -2px;
+    right: 5px;
+    font-size: 20px;
     color: #fff;
     cursor: pointer;
-    opacity: 0;
+    opacity: 0.5;
     transition: opacity .3s;
   }
 
 }
 
+.note-bottom{
+  position:absolute;
+	right:20px;
+	bottom:-20px;
+  border-bottom: 20px solid rgba(0,0,0,0);
+  border-left: 20px solid transparent;
+  
+  .note-after{
+    content:'';
+    background: #f0af1f;
+    width: 120px;
+    height:20px;
+    position:absolute;
+    bottom:-20px;
+    right:20px;
+  }
+}
+
 
 .draggable{
-  opacity: 0.8;
+  opacity: 0.5;
   cursor:move;
   transition: none;
 }
