@@ -1,64 +1,76 @@
 var express = require('express');
 var router = express.Router();
-var Note = require('../model/note').Note
-/*
-1.获取所有的note:GET /api/notes req:{} res:{status:0, data:[{},{}]}
-2.创建一个note:POST /api/note/add
-3.修改一个note:POST /api/note/edit
-4.删除一个note:POST /api/note/delete
-*/
+var Note = require('../model/note')
 
-/* GET users listing. */
-router.get('/notes', function (req, res, next) {
-  Note.findAll({
-    raw: true
-  }).then(function (notes) {
-    res.send({
-      status: 0,
-      data: notes
-    })
-  })
+/* 获取所有的 notes */
+
+router.get('/notes', function(req, res, next) {
+  var opts = {raw: true}
+  if(req.session && req.session.user){
+    opts.where = {username:req.session.user.username }
+  }
+
+  Note.findAll(opts).then(function(notes) {
+    console.log(notes)
+    res.send({status: 0, data: notes});
+  }).catch(function(){
+    res.send({ status: 1,errorMsg: '数据库异常'});
+  });
 });
 
-router.post('/notes/add', function (req, res, next) {
+/*新增note*/
+router.post('/notes/add', function(req, res, next){
+  if(!req.session || !req.session.user){
+    return res.send({status: 1, errorMsg: '请先登录'})
+  }
+  if (!req.body.note) {
+    return res.send({status: 2, errorMsg: '内容不能为空'});
+  }
   var note = req.body.note;
-  Note.create({
-    text: note
-  }).then(function () {
-    res.send({
-      status: 0
-    })
-  }).catch(function () {
-    res.send({
-      status: 1,
-      errorMsg: '数据库出错'
-    })
+  var username = req.session.user.username;
+  console.log({text: note, username: username})
+  Note.create({text: note, username: username}).then(function(){
+    console.log(arguments)
+    res.send({status: 0})
+  }).catch(function(){
+    res.send({ status: 1,errorMsg: '数据库异常或者你没有权限'});
   })
 })
 
-router.post('/notes/edit', function (req, res, next) {
-  Note.update({
-    text: req.body.note
-  }, {
-    where: {
-      id: req.body.id
+/*修改note*/
+router.post('/notes/edit', function(req, res, next){
+  if(!req.session || !req.session.user){
+    return res.send({status: 1, errorMsg: '请先登录'})
+  }
+  var noteId = req.body.id;
+  var note = req.body.note;
+  var username = req.session.user.username;
+  Note.update({text: note}, {where:{id: noteId, username: username}}).then(function(lists){
+    if(lists[0] === 0){
+      return res.send({ status: 1,errorMsg: '你没有权限'});
     }
-  }).then(function () {
-    res.send({
-      status: 0
-    })
+    res.send({status: 0})
+  }).catch(function(e){
+    res.send({ status: 1,errorMsg: '数据库异常或者你没有权限'});
   })
 })
 
-router.post('/notes/delete', function (req, res, next) {
-  Note.destroy({
-    where: {
-      id: req.body.id
+/*删除note*/
+router.post('/notes/delete', function(req, res, next){
+  if(!req.session || !req.session.user){
+    return res.send({status: 1, errorMsg: '请先登录'})
+  }
+
+  var noteId = req.body.id
+  var username = req.session.user.username;
+
+  Note.destroy({where:{id:noteId, username: username}}).then(function(deleteLen){
+    if(deleteLen === 0){
+      return res.send({ status: 1, errorMsg: '你没有权限'});
     }
-  }).then(function () {
-    res.send({
-      status: 0
-    })
+    res.send({status: 0})
+  }).catch(function(e){
+    res.send({ status: 1,errorMsg: '数据库异常或者你没有权限'});
   })
 })
 
