@@ -1,6 +1,6 @@
 var express = require('express');
 var path = require('path');
-// var favicon = require('serve-favicon');
+var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -8,7 +8,7 @@ var passport = require('passport');
 var session = require('express-session');
 
 var index = require('./routes/index');
-/* var all = require('./routes/all'); */
+var all = require('./routes/all');
 var api = require('./routes/api');
 var auth = require('./routes/auth');
 
@@ -18,6 +18,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,7 +29,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', index); //我的便签
-/* app.use('/all', all); //全部便签 */
+app.use('/all', all); //全部便签
 app.use('/api', api); //ajax 接口
 app.use('/auth', auth); //登录
 
