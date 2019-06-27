@@ -8,6 +8,7 @@
     "watch": "onchange 'src/**/*.js' 'src/**/*.less' -- npm run webpack"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "cookie-parser": "~1.4.4",
     "css-loader": "^3.0.0",
     "debug": "~2.6.9",
