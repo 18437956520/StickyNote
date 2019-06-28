@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Note = require('../models/note');
+var Note = require('../models/note.js')
 
 /* 获取所有的 notes */
 
